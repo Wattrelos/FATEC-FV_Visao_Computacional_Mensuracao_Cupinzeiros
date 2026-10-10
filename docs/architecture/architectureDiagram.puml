@@ -1,0 +1,203 @@
+@startuml "CupinzeiroVision - Android Studio Architecture"
+
+title Arquitetura de Software Android Studio - CupinzeiroVision\n(Offline-First, Clean Architecture, MVVM, Room, OpenCV & WorkManager)
+
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam packageStyle rectangle
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+
+' Paleta de cores padronizada
+skinparam package {
+  BorderColor #37474F
+  BackgroundColor #F5F7FA
+  FontColor #263238
+  FontStyle bold
+}
+
+skinparam component {
+  BorderColor #455A64
+  BackgroundColor #FFFFFF
+  FontColor #212121
+}
+
+skinparam database {
+  BorderColor #6A1B9A
+  BackgroundColor #F3E5F5
+  FontColor #4A148C
+}
+
+skinparam cloud {
+  BorderColor #0D47A1
+  BackgroundColor #E3F2FD
+  FontColor #0D47A1
+}
+
+' ========================================================
+' 1. HARDWARE E ENTRADAS DO DISPOSITIVO
+' ========================================================
+package "0. Dispositivo Móvel (Hardware & Sensores)" as Hardware #ECEFF1 {
+  [Sensor de Câmera (Camera2 / HAL)] as CamSensor #CFD8DC
+  [Sensor GPS (GNSS / Provedor de Localização)] as GPSSensor #CFD8DC
+  [Sistema de Arquivos Privativo\n(Context.filesDir / Scoped Storage)] as FileSystem #CFD8DC
+}
+
+' ========================================================
+' 2. CAMADA DE APRESENTAÇÃO (UI / MVVM)
+' ========================================================
+package "1. Camada de Apresentação (Presentation Layer - UI & MVVM)" as Presentation #E1F5FE {
+  
+  package "Views / Telas (Jetpack Compose / XML)" as Views {
+    [CameraCaptureScreen\n(PreviewView + Overlay HUD)] as ScreenCamera #B3E5FC
+    [MeasurementDetailsScreen\n(Laudo Dimensional e Cubagem)] as ScreenDetails #B3E5FC
+    [HistoryListScreen\n(Listagem de Coletas e Status)] as ScreenHistory #B3E5FC
+    [ExportReportDialog\n(Exportador CSV e PDF)] as ScreenExport #B3E5FC
+  }
+
+  package "ViewModels (Android Jetpack)" as ViewModels {
+    [CameraViewModel] as VMCamera #81D4FA
+    [MeasurementViewModel] as VMDetails #81D4FA
+    [HistoryViewModel] as VMHistory #81D4FA
+    [ExportViewModel] as VMExport #81D4FA
+  }
+
+  [UI State & Events\n(StateFlow / SharedFlow)] as UIState #E0F7FA
+}
+
+' ========================================================
+' 3. MOTOR DE PROCESSAMENTO DIGITAL DE IMAGENS (OPENCV)
+' ========================================================
+package "2. Módulo de Visão Computacional (OpenCV Engine)" as CVModule #FFF3E0 {
+  [CameraXManager\n(ImageCapture & Analyzer)] as CameraX #FFE0B2
+  [OpenCV Native Bridge\n(OpenCV Android SDK 4.x/5.x)] as OpenCVBridge #FFCC80
+  
+  package "Pipeline Algorítmico Especializado" as CVPipeline {
+    [ArUcoDetectorEngine\n(Deteccao 4x4, Escala cm/px, Pose PnP)] as ArUcoEngine #FFE0B2
+    [ColorCalibrationEngine\n(White Balance com Grey Card 18%)] as ColorEngine #FFE0B2
+    [MoundSegmentationEngine\n(Bilateral, HSV Solo, Convex Hull)] as SegEngine #FFE0B2
+    [VolumetricCalculator\n(Modelagem Paraboloide / Cone)] as VolEngine #FFE0B2
+  }
+}
+
+' ========================================================
+' 4. CAMADA DE DOMÍNIO (DOMAIN LAYER - CLEAN ARCHITECTURE)
+' ========================================================
+package "3. Camada de Domínio (Domain Layer - Pure Kotlin)" as Domain #E8F5E9 {
+  
+  package "Casos de Uso (Use Cases / Interactors)" as UseCases {
+    [ProcessMoundImageUseCase] as UCProcess #C8E6C9
+    [SaveMeasurementUseCase] as UCSave #C8E6C9
+    [GetHistoryMeasurementsUseCase] as UCHistory #C8E6C9
+    [ExportReportUseCase] as UCExport #C8E6C9
+    [SyncPendingMeasurementsUseCase] as UCSync #C8E6C9
+  }
+
+  package "Modelos de Domínio e Contratos" as DomainModels {
+    [TermiteMound\n(Entidade de Negócio)] as ModelMound #A5D6A7
+    interface "IMoundRepository" as IRepo #A5D6A7
+    interface "ILocationProvider" as ILocation #A5D6A7
+    interface "IReportExporter" as IExporter #A5D6A7
+  }
+}
+
+' ========================================================
+' 5. CAMADA DE DADOS E PERSISTÊNCIA (DATA LAYER - OFFLINE FIRST)
+' ========================================================
+package "4. Camada de Dados (Data Layer - Offline-First)" as DataLayer #F3E5F5 {
+  [MoundRepositoryImpl] as RepoImpl #E1BEE7
+  
+  package "Android Jetpack Room (SQLite ORM)" as RoomDB {
+    [AppDatabase\n(RoomDatabase)] as RoomDatabase #CE93D8
+    [MedicaoCupinzeiroDao\n(Queries Reativas com Flow)] as RoomDao #CE93D8
+    database "SQLite Local Database\n(Tabela: medicoes_cupinzeiro)" as LocalDB
+  }
+
+  [InternalStorageManager\n(Gravacao de JPEGs Brutos e HUD)] as StorageManager #E1BEE7
+  [LocalReportExporter\n(Gerador de CSV e PDF)] as ReportExporter #E1BEE7
+  [AndroidLocationProvider\n(FusedLocationClient)] as LocationManager #E1BEE7
+}
+
+' ========================================================
+' 6. SINCRONIZAÇÃO EM BACKGROUND E COMUNICAÇÃO REMOTA
+' ========================================================
+package "5. Sincronização & Rede (Background Sync & Cloud Layer)" as SyncLayer #FFFDE7 {
+  
+  package "Android Jetpack WorkManager" as WorkManagerPkg {
+    [SyncWorkManagerScheduler\n(Constraints: Internet + Bateria)] as WorkScheduler #FFF59D
+    [SyncMedicoesWorker\n(CoroutineWorker em Background)] as SyncWorker #FFF59D
+  }
+
+  package "Rede Remota (Retrofit 2 / REST)" as NetworkPkg {
+    [MoundApiService\n(Retrofit Interface)] as ApiService #FFF59D
+    [OkHttpClient\n(Interceptors e Timeouts Rurais)] as HttpClient #FFF59D
+  }
+
+  cloud "Servidor Central / Nuvem da Fazenda\n(API REST Backend + PostgreSQL/MySQL)" as CloudServer
+}
+
+' ========================================================
+' RELACIONAMENTOS E FLUXO DE DADOS (CLEAN ARCHITECTURE)
+' ========================================================
+
+' Hardware -> Presentation & CV
+CamSensor --> CameraX : Stream de Frames YUV / RAW
+GPSSensor --> LocationManager : Coordenadas Lat/Long
+CameraX --> ScreenCamera : Renderização de Preview
+CameraX --> OpenCVBridge : Envio de Bitmap / Mat
+
+' CV Pipeline
+OpenCVBridge --> ArUcoEngine : Mat em Tons de Cinza
+ArUcoEngine --> ColorEngine : Cantos da Tag -> ROI Cinza 18%
+ColorEngine --> SegEngine : Imagem com Balanço Corrigido
+SegEngine --> VolEngine : Contorno Convexa (W, H em px)
+ArUcoEngine --> VolEngine : Fator de Escala (cm/px) e Pose 3D
+VolEngine --> UCProcess : Dimensões Reais (cm) e Volume (Litros)
+
+' Presentation -> ViewModels -> Domain
+ScreenCamera ..> VMCamera : Dispara Ação de Captura
+ScreenDetails ..> VMDetails : Confirma e Salva Medição
+ScreenHistory ..> VMHistory : Solicita Histórico
+ScreenExport ..> VMExport : Solicita Arquivo CSV/PDF
+
+VMCamera --> UCProcess : Executa Análise
+VMDetails --> UCSave : Persiste Medição
+VMHistory --> UCHistory : Observa Fluxo
+VMExport --> UCExport : Exporta Relatório
+
+ViewModels ..> UIState : Emite Estado Reativo
+UIState ..> Views : Re-renderiza UI
+
+' Domain -> Data Contracts
+UCProcess ..> IRepo : Consulta Referências
+UCSave --> IRepo : Grava Registro
+UCHistory --> IRepo : Consulta com Flow
+UCSync --> IRepo : Consulta Pendentes
+UCExport --> IExporter : Dispara Exportação
+UCProcess --> ILocation : Obtém Coordenadas
+
+' Data Implementations
+RepoImpl ..|> IRepo
+ReportExporter ..|> IExporter
+LocationManager ..|> ILocation
+
+RepoImpl --> RoomDao : CRUD de Entidades
+RepoImpl --> StorageManager : Salva Arquivos de Imagem
+RoomDao --> RoomDatabase : Transações SQL
+RoomDatabase --> LocalDB : Persistência SQLite
+StorageManager --> FileSystem : Salva JPEGs no Armazenamento Interno
+ReportExporter --> FileSystem : Salva Arquivos CSV/PDF
+
+' Background Sync Flow
+WorkScheduler ..> SyncWorker : Enfileira com Restrições
+SyncWorker --> UCSync : Aciona Sincronização
+UCSync --> RepoImpl : Obtém Registros com Status PENDENTE
+RepoImpl --> ApiService : POST /api/v1/medicoes (JSON + Imagens)
+ApiService --> HttpClient : Executa Chamada HTTP
+HttpClient --> CloudServer : Upload Seguro SSL/TLS
+CloudServer --> HttpClient : Retorna HTTP 201 Created (ID Remoto)
+HttpClient --> RepoImpl : Atualiza Status para SINCRONIZADO
+
+@enduml

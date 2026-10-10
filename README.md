@@ -549,7 +549,7 @@ Na literatura científica contemporânea de Visão Computacional aplicada ao agr
 
 2. **Monitoramento de Cupinzeiros na Agropecuária (Sensoriamento Remoto):**
    - Pesquisas conduzidas pela Embrapa e centros de pesquisa agronômica priorizam o sensoriamento aéreo com aeronaves remotamente pilotadas (Drones / VANTs) ou imagens orbitais de alta resolução, aplicando redes neurais profundas (YOLO, Faster R-CNN) para **detecção e contagem de ninhos por hectare**.
-   - Os raros estudos focados na cubagem volumétrica tridimensional individual recorrem à **Fotogrametria Multiview (SfM)** — técnica que exige dezenas de fotografias circulares, elevado tempo de pós-processamento computacional e câmeras de alta fidelidade —, ou ao uso de escâneres LiDAR terrestres de custo proibitivo.
+   - Os raros estudos focados na cubagem volumétrica tridimensional individual recorrem à **Fotogrametria Multiview (SfM)** técnica que exige dezenas de fotografias circulares, elevado tempo de pós-processamento computacional e câmeras de alta fidelidade, ou ao uso de escâneres LiDAR terrestres de custo proibitivo.
    - **Lacuna Identificada:** Inexistência de um método de mensuração individual que seja **instantâneo, monocular (baseado em uma única captura)**, de baixo custo operacional e executável diretamente em dispositivos móveis (*edge computing*) pelo próprio produtor rural ou técnico agrícola.
 
 ---
@@ -615,7 +615,8 @@ Compostos de solo argiloso cimentado por saliva e fezes de operárias, os cupinz
 
 ### 12.5 Sustentabilidade, Racionalização Química e Critérios ESG
 A erradicação empírica tradicional baseia-se na aplicação aleatória e excessiva de defensivos químicos, gerando riscos de contaminação de lençóis freáticos e eliminação de fauna edáfica benéfica.
-* **Sustentabilidade (ESG):** A cubagem precisa possibilita o cálculo da dosagem milimétrica necessária por metro cúbico de ninho, reduzindo custos com insumos e minimizando a pegada química da propriedade — fator de conformidade indispensável para certificações de carne sustentável e rastreabilidade agropecuária.
+* **Sustentabilidade (ESG):** A cubagem precisa possibilita o cálculo da dosagem milimétrica necessária por metro cúbico de ninho, reduzindo custos com insumos e minimizando a pegada química da propriedade
+, fator de conformidade indispensável para certificações de carne sustentável e rastreabilidade agropecuária.
 
 
 
