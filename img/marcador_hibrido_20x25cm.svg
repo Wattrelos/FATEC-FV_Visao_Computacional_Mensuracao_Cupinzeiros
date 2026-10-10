@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="20.0cm" height="25.0cm" viewBox="0 0 20.0 25.0">
+  <!-- Fundo Gray Card 18% (sRGB #767676) -->
+  <rect x="0" y="0" width="20.0" height="25.0" fill="#767676" />
+  <!-- Borda de corte de 20x25 cm -->
+  <rect x="0.05" y="0.05" width="19.9" height="24.9" fill="none" stroke="#505050" stroke-width="0.05" />
+  <!-- Tag ArUco DICT_4X4_50 ID 23 -->
+  <g id="aruco_marker">
+    <rect x="5.0000" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="8.3333" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="10.0000" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="11.6667" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="13.3333" y="7.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="5.0000" y="9.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="9.1667" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="8.3333" y="9.1667" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="10.0000" y="9.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="11.6667" y="9.1667" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="13.3333" y="9.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="5.0000" y="10.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="10.8333" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="8.3333" y="10.8333" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="10.0000" y="10.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="11.6667" y="10.8333" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="13.3333" y="10.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="5.0000" y="12.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="12.5000" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="8.3333" y="12.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="10.0000" y="12.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="11.6667" y="12.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="13.3333" y="12.5000" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="5.0000" y="14.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="14.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="8.3333" y="14.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="10.0000" y="14.1667" width="1.6667" height="1.6667" fill="#FFFFFF" />
+    <rect x="11.6667" y="14.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="13.3333" y="14.1667" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="5.0000" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="6.6667" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="8.3333" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="10.0000" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="11.6667" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+    <rect x="13.3333" y="15.8333" width="1.6667" height="1.6667" fill="#000000" />
+  </g>
+  <text x="10.0" y="24.4" font-family="Arial, sans-serif" font-size="0.35" fill="#3a3a3a" text-anchor="middle">FATEC Ferraz | CupinzeiroVision | ArUco 4x4 ID:23 (10x10cm) | Gray Card 18% (20x25cm)</text>
+</svg>
